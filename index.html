@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Codificador de Loadstring</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #1e1e1e; color: white; }
+    textarea, button, pre { width: 100%; margin-top: 10px; font-size: 16px; }
+    textarea { height: 100px; }
+    pre { background-color: #333; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <h2>Codificador de Loadstring</h2>
+  <p>Cole seu código <code>loadstring(game:HttpGet("URL"))()</code> abaixo:</p>
+  <textarea id="input"></textarea>
+  <button onclick="converter()">Converter</button>
+
+  <h3>Resultado:</h3>
+  <pre id="saida"></pre>
+
+  <script>
+    function converter() {
+      const entrada = document.getElementById("input").value.trim();
+      if (!entrada.startsWith("loadstring(")) {
+        document.getElementById("saida").textContent = "Entrada inválida.";
+        return;
+      }
+
+      const convertido = entrada.split("").map(c => "\\" + c.charCodeAt(0)).join("");
+      document.getElementById("saida").textContent = 'loadstring("' + convertido + '")()';
+    }
+  </script>
+</body>
+</html>
