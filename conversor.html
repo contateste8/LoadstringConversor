@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Loadstring (URL para Bytecode)</title>
+</head>
+<body>
+  <h2>Conversor de Loadstring (URL para Bytecode)</h2>
+  <textarea id="input" rows="6" cols="100" placeholder='Cole seu loadstring aqui'></textarea><br><br>
+  <button onclick="converter()">Converter</button><br><br>
+  <label for="output">Resultado:</label><br>
+  <textarea id="output" rows="8" cols="100" readonly></textarea>
+
+  <script>
+    function converter() {
+      let input = document.getElementById("input").value;
+
+      // Captura qualquer URL dentro de HttpGet("...") ou HttpGet('...')
+      let regex = /HttpGet\s*\s*["'](.+?)["']\s*/;
+      let match = input.match(regex);
+
+      if (!match) {
+        alert("URL não encontrada em game:HttpGet(...).");
+        return;
+      }
+
+      let url = match[1];
+      let urlEncoded = "";
+      for (let i = 0; i < url.length; i++) {
+        urlEncoded += "\\" + url.charCodeAt(i);
+      }
+
+      // Substitui a URL original pela versão em bytecode
+      let urlFinal = `"\\${urlEncoded}"`;
+      let output = input.replace(regex, `HttpGet(${urlFinal})`);
+
+      // Envolvendo tudo em loadstring novamente
+      output = `loadstring("${[...output].map(c => "\\" + c.charCodeAt(0)).join("")}")()`;
+
+      document.getElementById("output").value = output;
+    }
+  </script>
+</body>
+</html>
