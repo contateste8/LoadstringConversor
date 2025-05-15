@@ -2,33 +2,110 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Codificador de Loadstring</title>
   <style>
-    body { font-family: Arial; padding: 20px; background-color: #1e1e1e; color: white; }
-    textarea, button, pre { width: 100%; margin-top: 10px; font-size: 16px; }
-    textarea { height: 100px; }
-    pre { background-color: #333; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      color: #325FFF;
+      text-shadow: 0 0 8px #325FFF;
+    }
+
+    textarea, pre {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      resize: vertical;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    pre {
+      background-color: #1e1e1e;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 80px;
+    }
+
+    .button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #325FFF;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 12px #325FFF;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .button:hover {
+      box-shadow: 0 0 20px #325FFF;
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      textarea, pre, .button {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
   <h2>Codificador de Loadstring</h2>
-  <p>Cole seu código <code>loadstring(game:HttpGet("URL"))()</code> abaixo:</p>
-  <textarea id="input"></textarea>
-  <button onclick="converter()">Converter</button>
+  <p style="max-width: 600px;">Cole seu código <code>loadstring(game:HttpGet("URL"))()</code> abaixo:</p>
+  
+  <textarea id="input" placeholder='Cole aqui seu código loadstring...'></textarea>
+  
+  <button class="button" onclick="converter()">Converter</button>
+  <button class="button" onclick="copiar()" style="margin-top: 10px;">Copiar Código</button>
 
-  <h3>Resultado:</h3>
+  <h3 style="color: #325FFF; text-shadow: 0 0 8px #325FFF;">Resultado:</h3>
   <pre id="saida"></pre>
 
   <script>
     function converter() {
       const entrada = document.getElementById("input").value.trim();
       if (!entrada.startsWith("loadstring(")) {
-        document.getElementById("saida").textContent = "Entrada inválida.";
+        document.getElementById("saida").textContent = "Entrada inválida. Use loadstring(game:HttpGet(\"URL\"))()";
         return;
       }
 
       const convertido = entrada.split("").map(c => "\\" + c.charCodeAt(0)).join("");
       document.getElementById("saida").textContent = 'loadstring("' + convertido + '")()';
+    }
+
+    function copiar() {
+      const texto = document.getElementById("saida").textContent;
+      if (!texto) return;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert("Código copiado!");
+      });
     }
   </script>
 </body>
