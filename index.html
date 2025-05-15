@@ -46,7 +46,7 @@
     }
 
     .button {
-      margin-top: 15px;
+      margin-top: 10px;
       padding: 12px 20px;
       font-size: 16px;
       border: none;
@@ -83,7 +83,8 @@
   <textarea id="input" placeholder='Cole aqui seu código loadstring...'></textarea>
   
   <button class="button" onclick="converter()">Converter</button>
-  <button class="button" onclick="copiar()" style="margin-top: 10px;">Copiar Código</button>
+  <button class="button" onclick="copiar()">Copiar Código</button>
+  <button class="button" onclick="limpar()">Limpar Campos</button>
 
   <h3 style="color: #325FFF; text-shadow: 0 0 8px #325FFF;">Resultado:</h3>
   <pre id="saida"></pre>
@@ -106,6 +107,11 @@
       navigator.clipboard.writeText(texto).then(() => {
         alert("Código copiado!");
       });
+    }
+
+    function limpar() {
+      document.getElementById("input").value = "";
+      document.getElementById("saida").textContent = "";
     }
   </script>
 </body>
