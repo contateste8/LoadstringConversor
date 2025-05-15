@@ -78,7 +78,7 @@
 </head>
 <body>
   <h2>Codificador de Loadstring</h2>
-  <p style="max-width: 600px;">Cole seu código <code>loadstring(game:HttpGet("URL"))()</code> abaixo:</p>
+  <p style="max-width: 600px;">Cole qualquer código <code>loadstring(game:HttpGet("..."))()</code> abaixo:</p>
   
   <textarea id="input" placeholder='Cole aqui seu código loadstring...'></textarea>
   
@@ -92,8 +92,8 @@
   <script>
     function converter() {
       const entrada = document.getElementById("input").value.trim();
-      if (!entrada.startsWith("loadstring(")) {
-        document.getElementById("saida").textContent = "Entrada inválida. Use loadstring(game:HttpGet(\"URL\"))()";
+      if (!entrada.includes("loadstring")) {
+        document.getElementById("saida").textContent = "Código inválido. Certifique-se de usar loadstring(game:HttpGet(\"URL\"))()";
         return;
       }
 
